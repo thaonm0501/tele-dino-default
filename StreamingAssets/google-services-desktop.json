@@ -1,0 +1,79 @@
+{
+  "project_info": {
+    "project_number": "735906536510",
+    "firebase_url": "https://fall-io.firebaseio.com",
+    "project_id": "fall-io",
+    "storage_bucket": "fall-io.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735906536510:android:6683eb48e267af9fee456f",
+        "android_client_info": {
+          "package_name": "com.genify.fall.io"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735906536510-ip2fbf27q76cirq7puffaoddu3pc4kqq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.genify.fall.io",
+            "certificate_hash": "84ced91f7d71d4ea1c23207621f74f74031472f8"
+          }
+        },
+        {
+          "client_id": "735906536510-svbqp7ukemr4t9ck3r3df8ul5kd5erkr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.genify.fall.io",
+            "certificate_hash": "930884cf206b44bdacd39112766b071ad0ec10dd"
+          }
+        },
+        {
+          "client_id": "735906536510-tb06sh4ittbogqfpqflnjt4otr5oud6n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.genify.fall.io",
+            "certificate_hash": "fcaa05064f6cbc615e6262b390826a1535820f2d"
+          }
+        },
+        {
+          "client_id": "735906536510-tbs4heao6e17pvcjehm05pve5j0ue4i6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.genify.fall.io",
+            "certificate_hash": "f7aa1637ad1ae5ff08f65d522628e6bae4be422e"
+          }
+        },
+        {
+          "client_id": "735906536510-fqgmvmpf6s048iksjtnrumfqj9b5b4rm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyOXwxvRSJQDixZvWSrVbfyScNKoVP7Vk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735906536510-fqgmvmpf6s048iksjtnrumfqj9b5b4rm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735906536510-2tnfo54khd4ok1fn2c8dqh7a5i8tsneg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.genify.fall.io"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

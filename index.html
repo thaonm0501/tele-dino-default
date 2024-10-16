@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="google-adsense-account" content="ca-pub-7391223309570947">
+    <meta name="keywords" content="fall.io,io game,online game,free game">
+    <meta name="description" content="Do you enjoy playing durable running games, racing against other opponents? It's great that you know our game. It will give you the feeling of a real race..">
+    <title>Fall.io - Race of Dino</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="javascript" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js">
+    <link rel="javascript" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas"></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+      <div id="unity-warning"> </div>
+      <div id="unity-footer">
+        <div id="unity-fullscreen-button"></div>
+      </div>
+
+      <div style="position: absolute; bottom: 10px; left: 10px;">
+        <div class="page-content page-container" id="page-content">
+           <div class="padding">
+             <div class="template-demo mt-2">
+               <a class="btn btn-outline-dark btn-icon-text" href="https://fallio.page.link/ios" target="_blank">
+                 <i class="fa fa-apple btn-icon-prepend mdi-36px"></i>
+                 <span class="d-inline-block text-left">
+                   <small class="font-weight-light d-block">Available on the</small> App Store </span>
+               </a>
+               <a class="btn btn-outline-dark btn-icon-text" href="https://fallio.page.link/android" target="_blank">
+                 <i class="fa fa-android btn-icon-prepend mdi-36px"></i>
+                 <span class="d-inline-block text-left">
+                   <small class="font-weight-light d-block">Get it on the</small> Google Play </span>
+               </a>
+             </div>
+           </div>
+         </div>
+      </div>
+
+      <div style="position: absolute; top: 0px; left: 0px;background:white;padding: 2px">
+        <div class="page-content page-container" id="page-content">
+           <div class="padding">
+            <!-- <a id="btn-privacy-settings" target="_blank" class="text-muted footer-gamemode">Privacy Settings</a> | -->
+            <a href="https://genify.vn/cookie-policy/" target="_blank" class="text-muted">Cookie Policy</a> |
+            <a href="https://genify.vn/privacy-policy/" target="_blank" class="text-muted">Privacy Policy</a> |
+            <a href="https://genify.vn/terms-conditions/" target="_blank" class="text-muted">Terms of Service</a> |
+            <a href="mailto:contact@genify.vn" class="text-muted">Contact Support</a>
+         </div>
+      </div>
+    </div>
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+      import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyCb1p46FlHleFbxRSDcJJCoIvTdjK99__E",
+        authDomain: "fall-io.firebaseapp.com",
+        databaseURL: "https://fall-io.firebaseio.com",
+        projectId: "fall-io",
+        storageBucket: "fall-io.appspot.com",
+        messagingSenderId: "735906536510",
+        appId: "1:735906536510:web:ef6ff7bb1472b8eeee456f",
+        measurementId: "G-FB65CG4BWC"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+
+      var logEventFirebase = function(eventName, eventParams) {
+          console.log("tracking event " + eventName)
+          console.log(eventParams)
+          let paramsObject = {}
+          if (eventParams != null){
+            let params = eventParams.split(",")
+            if(params.length > 0){
+              for (var i = 0; i < params.length / 2; i++) {
+                let key = params[i * 2]
+                let value = params[i * 2 + 1]
+                if(value == null) {
+                  continue
+                }
+                paramsObject[key] = value
+              }
+            }
+          }
+
+          logEvent(analytics, eventName, paramsObject)
+
+        }
+
+      window.logEventFirebase = logEventFirebase
+    </script>
+    <script>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
+
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
+
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/Fall_Tele.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/099ac00ce0b78b2c1cb9c3b980294801.data",
+        frameworkUrl: buildUrl + "/b033f831c4204573d072a0f1bf172f7c.js",
+        codeUrl: buildUrl + "/f7d8e4dfd34dfb7d625db6eb6ad2591c.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Genify",
+        productName: "Fall.io",
+        productVersion: "1.5.0.9",
+        showBanner: unityShowBanner,
+      };
+
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
+
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        // Avoid draining fillrate performance on mobile devices,
+        // and default/override low DPI mode on mobile browsers.
+        config.devicePixelRatio = 1;
+        unityShowBanner('WebGL builds are not supported on mobile devices.');
+      } else {
+        // canvas.style.width = "1280px";
+        // canvas.style.height = "720px";
+      }
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          window.unityInstance = unityInstance;
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>
