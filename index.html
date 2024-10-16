@@ -3,60 +3,28 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="google-adsense-account" content="ca-pub-7391223309570947">
-    <meta name="keywords" content="fall.io,io game,online game,free game">
-    <meta name="description" content="Do you enjoy playing durable running games, racing against other opponents? It's great that you know our game. It will give you the feeling of a real race..">
     <title>Fall.io - Race of Dino</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
-    <link rel="javascript" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js">
-    <link rel="javascript" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	<script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas"></canvas>
+     <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
           <div id="unity-progress-bar-full"></div>
         </div>
       </div>
+      <!--
       <div id="unity-warning"> </div>
       <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Test Web App</div>
       </div>
-
-      <div style="position: absolute; bottom: 10px; left: 10px;">
-        <div class="page-content page-container" id="page-content">
-           <div class="padding">
-             <div class="template-demo mt-2">
-               <a class="btn btn-outline-dark btn-icon-text" href="https://fallio.page.link/ios" target="_blank">
-                 <i class="fa fa-apple btn-icon-prepend mdi-36px"></i>
-                 <span class="d-inline-block text-left">
-                   <small class="font-weight-light d-block">Available on the</small> App Store </span>
-               </a>
-               <a class="btn btn-outline-dark btn-icon-text" href="https://fallio.page.link/android" target="_blank">
-                 <i class="fa fa-android btn-icon-prepend mdi-36px"></i>
-                 <span class="d-inline-block text-left">
-                   <small class="font-weight-light d-block">Get it on the</small> Google Play </span>
-               </a>
-             </div>
-           </div>
-         </div>
-      </div>
-
-      <div style="position: absolute; top: 0px; left: 0px;background:white;padding: 2px">
-        <div class="page-content page-container" id="page-content">
-           <div class="padding">
-            <!-- <a id="btn-privacy-settings" target="_blank" class="text-muted footer-gamemode">Privacy Settings</a> | -->
-            <a href="https://genify.vn/cookie-policy/" target="_blank" class="text-muted">Cookie Policy</a> |
-            <a href="https://genify.vn/privacy-policy/" target="_blank" class="text-muted">Privacy Policy</a> |
-            <a href="https://genify.vn/terms-conditions/" target="_blank" class="text-muted">Terms of Service</a> |
-            <a href="mailto:contact@genify.vn" class="text-muted">Contact Support</a>
-         </div>
-      </div>
+	  -->      
     </div>
     <script type="module">
       // Import the functions you need from the SDKs you need
@@ -107,6 +75,7 @@
       window.logEventFirebase = logEventFirebase
     </script>
     <script>
+      const webapp = window.Telegram.WebApp;
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
@@ -159,14 +128,21 @@
       // config.matchWebGLToCanvasSize = false;
 
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
         container.className = "unity-mobile";
-        // Avoid draining fillrate performance on mobile devices,
-        // and default/override low DPI mode on mobile browsers.
-        config.devicePixelRatio = 1;
-        unityShowBanner('WebGL builds are not supported on mobile devices.');
+        canvas.className = "unity-mobile";
+		config.devicePixelRatio = 1;
       } else {
-        // canvas.style.width = "1280px";
-        // canvas.style.height = "720px";
+
+		 //canvas.style.width = ((getHeight()-getHeight()*.05)*9/16)+"px";
+        	//canvas.style.height = (getHeight()-getHeight()*.05)+"px";
+	      	canvas.style.width = getWidth()+"px";
+        	canvas.style.height = getHeight()+"px";
+		console.log('Width:  ' +  getWidth());
+		console.log('Height: ' +getHeight());
       }
       loadingBar.style.display = "block";
 
@@ -178,14 +154,34 @@
         }).then((unityInstance) => {
           window.unityInstance = unityInstance;
           loadingBar.style.display = "none";
-          fullscreenButton.onclick = () => {
-            unityInstance.SetFullscreen(1);
-          };
+          //fullscreenButton.onclick = () => {
+            //unityInstance.SetFullscreen(1);
+          //};
         }).catch((message) => {
           alert(message);
         });
       };
       document.body.appendChild(script);
+	   setTimeout(() => {  webapp.expand(); }, 500);
+	  function getWidth() {
+  return Math.max(
+    document.body.scrollWidth,
+    document.documentElement.scrollWidth,
+    document.body.offsetWidth,
+    document.documentElement.offsetWidth,
+    document.documentElement.clientWidth
+  );
+}
+
+function getHeight() {
+  return Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+    document.body.offsetHeight,
+    document.documentElement.offsetHeight,
+    document.documentElement.clientHeight
+  );
+}
     </script>
   </body>
 </html>
