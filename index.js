@@ -9,7 +9,7 @@ const bot = new TelegramBot(TOKEN, {
 const port = process.env.PORT || 5000;
 const gameName = "dinodefault";
 const queries = {};
-const { Keyboard } = require('telegram-keyboard')
+//const { Keyboard } = require('telegram-keyboard')
 server.use(express.static(path.join(__dirname, 'dinodefault')));
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
 bot.onText(/start|game/, (msg) => {
